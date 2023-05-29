@@ -1,0 +1,19 @@
+1.	Tabel "kategori":
+Kolom: id (PK), nama_kategori
+	Ditabel ini tedapat kategori kursus, yang berisikan "programming", "database", "networking", "aplikasi perkantoran", dan "desain grafis".Pada setiap kategori memiliki id unik sebagai Primary Key dan nama_kategori yang berisikan jenis kategori kursus.
+
+2.	Tabel "materi":
+Kolom: id (PK), kode, nama_materi, deskripsi, durasi_jam, biaya, kategori_id (FK)
+	Dalam tabel ini berisikan materi-materi yang akan disampaikan pengajar kepada peserta seui dengan jenis kategori masing-masing. Setiap materi memiliki id unik yang di inisiasikan sebai Primary Key, kode materi untuk identifikasi, nama materi, deskripsi, durasi dalam jam, biaya kursus, dan kategori_id yang merupakan Foreigh Key yang terhubung ke tabel "kategori".
+
+3.	Tabel "pengajar":
+Kolom: id (PK), nip, nama, gender, hp, email, alamat, foto
+	Dalam tabel ini berisikan informasi tentang pengajar yang akan mengajar materi kursus kepada peserta. Setiap pengajar memiliki id unik sebagai Primary Key, nomor induk pengajar (nip), nama pengajar, gender/jenis kelamin , nomor telepon (hp), alamat pengajar, email pengajar, dan foto pengajar.
+
+4.	Tabel "peserta":
+Kolom: id (PK), nama, gender, hp, email, alamat, foto
+	Dalam table ini tidak jauh berbeda seperti tabel pengajar, yang mana di dalamnya terdapat informasi tentang pelajar yang akan mendapatkan materi kursus dari pengajar.
+
+5.	Tabel "penjadwalan_kelas":
+Kolom: id (PK), kode_kelas, kelas, hari, tgl_mulai, tgl_akhir, jam_mulai, jam_akhir, materi_id (FK), pengajar_id (FK), peserta_id (FK)
+Tabel ini digunakan untuk mengatur penjadwalan kelas. Setiap colom dalam tabel ini berisikan informasi tentang kelas tertentu, seperti kode_kelas, nama kelas, hari dan jam pelaksanaan, tanggal mulai kursus dan tanggal akhirnya, serta materi_id sebagai Foreigh Key yang menghubungkannya ke tabel "materi", pengajar_id sebagai Foreigh Key yang menghubungkannya ke tabel "pengajar", dan peserta_id sebagai Foreigh Key yang menghubungkannya ke tabel "peserta". Relasi many-to-many antara kelas, materi, pengajar, dan peserta digunakan dalam tabel ini.

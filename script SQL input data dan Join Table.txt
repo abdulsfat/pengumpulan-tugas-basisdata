@@ -1,0 +1,76 @@
+INSERT INTO `nf_komputer`.`kategori` (`nama_kategori`)
+VALUES 
+    ('programming'),
+    ('database'),
+    ('networking'),
+    ('aplikasi perkantoran'),
+    ('desain grafis');
+
+----------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `nf_komputer`.`materi` (`kode`, `nama_materi`, `deskripsi`, `durasi_jam`, `biaya`, `kategori_id`)
+VALUES
+	('1-PR', 'PHP', 'Dasar PHP', '2 Jam', '50.000', '1'),
+	('1-PR', 'Python', 'Dasar Python', '2 Jam', '50.000', '1'),
+	('2-DB', 'PostgreSQL', 'Dasar PostgreSQL', '2 Jam', '50.000', '2'),
+	('2-DB', 'MariaDb', 'Dasar MariaDb', '2 Jam', '50.000', '2');
+
+----------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `nf_komputer`.`pelajar` (`nama_pelajar`, `gender`, `hp`, `email`, `alamat`, `foto`)
+VALUES
+	('Anisa', 'P', '08151734', 'anisa@gmail.com', 'Jln. Ciremai', 'foto_anisa.jpg'),
+	('Rangga', 'L', '08151789', 'rangga@gmail.com', 'Jln. Anggrek', 'foto_rangga.jpg'),
+	('Tulus', 'L', '08151767', 'tulus@gmail.com', 'Jln. Duri', 'foto_tulus.jpg'),
+	('Fadil', 'L', '08151732', 'fadil@gmail.com', 'Jln. Lurus', 'foto_fadil.jpg');
+
+----------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `nf_komputer`.`pengajar` (`nip`, `nama_pengajar`, `gender`, `hp`, `email`, `alamat`, `foto`)
+VALUES
+	('11112', 'Jay', 'L', '08151734', 'jay@gmail.com', 'Jln. Robot', 'foto_jay.jpg'),
+	('11113', 'Yuri', 'P', '08151789', 'yuri@gmail.com', 'Jln. Budiman', 'foto_yuri.jpg'),
+	('11114', 'Tyar', 'L', '08155354', 'tyar@gmail.com', 'Jln. Cipaok', 'foto_tyar.jpg'),
+	('11115', 'Sule', 'L', '08154587', 'sule@gmail.com', 'Jln. Bangbarung', 'foto_sule.jpg');
+
+----------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `nf_komputer`.`penjadwalan_kelas` (`kode_kelas`, `kelas`, `hari`, `tgl_mulai`, `tgl_akhir`, `jam_mulai`, `jam_akhir`, `materi_id`, `pengajar_id`, `pelajar_id`)
+VALUES
+	('KLS-001', 'TI01', 'Senin', '2023-05-25', '2023-07-10', '13:00', '15:00', '1', '1', '1'),
+	('KLS-002', 'TI02', 'Senin', '2023-05-25', '2023-07-10', '13:00', '15:00', '1', '2', '2'),
+	('KLS-003', 'TI03', 'Selasa', '2023-05-26', '2023-07-10', '13:00', '15:00', '2', '3', '3'),
+	('KLS-004', 'TI04', 'Selasa', '2023-05-26', '2023-07-10', '13:00', '15:00', '2', '4', '4');
+
+----------------------------------------------------------------------------------------------------------------
+
+SELECT * FROM kategori
+INNER JOIN materi ON materi.id = kategori.id;
+
+----------------------------------------------------------------------------------------------------------------
+
+SELECT * FROM kategori 
+INNER JOIN pengajar ON pengajar.id = kategori.id 
+INNER JOIN pelajar ON pelajar.id = kategori.id
+INNER JOIN penjadwalan_kelas ON penjadwalan_kelas.id = kategori.id;
+
+----------------------------------------------------------------------------------------------------------------
+
+SELECT 	penjadwalan_kelas.hari,
+		penjadwalan_kelas.kode_kelas AS Kode,
+		penjadwalan_kelas.kelas,
+		pengajar.nama_pengajar AS Pengajar,
+		pelajar.nama_pelajar AS Pelajar,
+		materi.nama_materi AS Materi,
+		penjadwalan_kelas.jam_mulai,
+        	penjadwalan_kelas.jam_akhir
+FROM penjadwalan_kelas 
+INNER JOIN pengajar ON pengajar.id = pengajar_id
+INNER JOIN pelajar ON pelajar.id = pelajar_id
+INNER JOIN materi ON materi.id = materi_id;
+
+----------------------------------------------------------------------------------------------------------------
+
+
+
+
