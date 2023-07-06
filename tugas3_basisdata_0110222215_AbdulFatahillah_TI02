@@ -8,13 +8,13 @@ Kelas	: Teknik Informatika 02
 1. Membuat trigger:
 
 	a. Membuat trigger "tambahStok" untuk menambah stok di tabel produk setelah ada penginputan transaksi di tabel suplai_produk:
-		DELIMITER **
+		DELIMITER %%
 		CREATE TRIGGER tambahStok
 		AFTER INSERT ON suplai_produk
 		FOR EACH ROW
 		BEGIN
 		UPDATE produk SET stok = stok + NEW.jumlah WHERE id = NEW.produk_id;
-		END **
+		END %%
 
 	b. Membuat trigger "normalisasiStok" untuk mengembalikan stok ke kondisi normal di tabel produk jika transaksi penginputan suplai_produk dibatalkan (delete):
 		DELIMITER %%
