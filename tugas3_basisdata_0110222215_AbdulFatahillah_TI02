@@ -1,0 +1,61 @@
+Tugas 3 Basis Data
+-------------------------------------------------------------------------------------------------
+Nama 	: Abdul Fatahillah
+NIM	: 0110222215
+Kelas	: Teknik Informatika 02
+-------------------------------------------------------------------------------------------------
+
+1. Membuat trigger:
+
+	a. Membuat trigger "tambahStok" untuk menambah stok di tabel produk setelah ada penginputan transaksi di tabel suplai_produk:
+		DELIMITER **
+		CREATE TRIGGER tambahStok
+		AFTER INSERT ON suplai_produk
+		FOR EACH ROW
+		BEGIN
+		UPDATE produk SET stok = stok + NEW.jumlah WHERE id = NEW.produk_id;
+		END **
+
+	b. Membuat trigger "normalisasiStok" untuk mengembalikan stok ke kondisi normal di tabel produk jika transaksi penginputan suplai_produk dibatalkan (delete):
+		DELIMITER %%
+		CREATE OR REPLACE TRIGGER normalisasiStok
+		AFTER DELETE ON suplai_produk
+		BEGIN
+		UPDATE produk SET stok = stok + OLD.jumlah WHERE id = OLD.produk_id;
+		END %%
+-------------------------------------------------------------------------------------------------
+
+2. Melakukan query inner join pada tabel di skema data suplai barang untuk menampilkan data tgl_suplai, nama produk, nama jenis, jumlah barang yang disuplai, dan nama supplier (dengan relasi 4 buah tabel):
+
+	SELECT suplai_produk.tgl_suplai, produk.nama, jenis.nama, suplai_produk.jumlah, supplier.nama
+	FROM suplai_produk
+	INNER JOIN produk ON suplai_produk.produk_id = produk.id
+	INNER JOIN jenis ON produk.jenis_id = jenis.id
+	INNER JOIN supplier ON suplai_produk.supplier_id = supplier.id;
+-------------------------------------------------------------------------------------------------
+
+3. Membuat user baru dengan izin akses:
+
+	a. Memberikan hak akses penuh (ALL PRIVILEGES) ke seluruh database dan tabel yang berada di dalamnya kepada user Roni:
+
+		GRANT ALL PRIVILEGES ON . TO 'roni'@'localhost' IDENTIFIED BY 'roni';
+		SHOW GRANTS FOR 'roni'@'localhost';
+
+	b. Memberikan hak akses penuh (ALL PRIVILEGES) ke database toko_online dan seluruh tabel yang berada di dalamnya kepada user Desi:
+
+		GRANT ALL PRIVILEGES ON toko_online.* TO 'desi'@'localhost' IDENTIFIED BY 'desi';
+
+	c. Memberikan hak akses INSERT dan SELECT ke tabel jenis dan produk kepada user Zaki:
+
+		GRANT INSERT, SELECT ON toko_online.jenis TO 'zaki'@'localhost' IDENTIFIED BY 'zaki';
+-------------------------------------------------------------------------------------------------
+
+4. Mencabut hak akses:
+
+	a. Mencabut hak akses INSERT dari user Zaki untuk tabel produk:
+
+		REVOKE INSERT ON toko_online.produk FROM 'zaki'@'localhost';
+
+	b. Mencabut seluruh hak akses dari user Desi:
+
+		REVOKE ALL PRIVILEGES ON . FROM 'desi'@'localhost';
